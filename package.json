@@ -1,0 +1,16 @@
+{
+  "name": "election-navigator",
+  "version": "1.0.0",
+  "description": "Futuristic AI-powered civic education assistant",
+  "scripts": {
+    "dev": "npx -y http-server . -p 3000 -o"
+  },
+  "keywords": [
+    "civic",
+    "education",
+    "election",
+    "assistant"
+  ],
+  "author": "Election Navigator Team",
+  "license": "MIT"
+}

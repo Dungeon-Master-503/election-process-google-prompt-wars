@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-text-size="medium" data-dyslexia="false">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Election Navigator - Futuristic Civic Companion</title>
+  <meta name="description" content="An interactive, visual, and AI-powered civic education guide. Empowering citizens, first-time voters, and students to navigate the democratic process with confidence.">
+  
+  <!-- Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;800&display=swap" rel="stylesheet">
+  
+  <!-- Remix Icons (for premium modern symbols) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  
+  <!-- Ambient Glow Background Blobs -->
+  <div class="glow-bg">
+    <div class="blob blob-primary"></div>
+    <div class="blob blob-secondary"></div>
+    <div class="blob blob-tertiary"></div>
+  </div>
+
+  <!-- Onboarding Overlay container -->
+  <div id="onboarding-overlay" class="overlay active">
+    <!-- Rendered dynamically by Onboarding.js -->
+  </div>
+
+  <!-- Main App Layout (Hidden during onboarding) -->
+  <div id="app-layout" class="layout-hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i class="ri-compass-3-line"></i>
+        </div>
+        <div class="brand-text">
+          <h1>ELECTION</h1>
+          <span>NAVIGATOR</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <button class="nav-item active" data-target="journey" aria-label="Election Journey">
+              <i class="ri-road-map-line"></i>
+              <span>Voter Journey</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-target="chat" aria-label="AI Assistant Chat">
+              <i class="ri-robot-2-line"></i>
+              <span>AI Chat Assistant</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-target="timeline" aria-label="Election Timeline">
+              <i class="ri-calendar-todo-line"></i>
+              <span>Live Timeline</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-target="learning" aria-label="Learning Hub">
+              <i class="ri-graduation-cap-line"></i>
+              <span>Learning Hub</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-target="widgets" aria-label="Live Widgets">
+              <i class="ri-dashboard-3-line"></i>
+              <span>Live Dashboards</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item" data-target="security" aria-label="Trust and Security">
+              <i class="ri-shield-check-line"></i>
+              <span>Trust & Security</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- User Profile Card in Sidebar -->
+      <div class="sidebar-user" id="user-profile-badge">
+        <div class="user-avatar" id="sidebar-avatar-img">
+          <i class="ri-user-smile-line"></i>
+        </div>
+        <div class="user-info">
+          <h4 id="sidebar-username">Citizen</h4>
+          <p id="sidebar-userrole">First-Time Voter</p>
+        </div>
+        <button class="reset-onboarding-btn" id="restart-tour-btn" title="Restart Onboarding">
+          <i class="ri-restart-line"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Shell -->
+    <main class="main-content">
+      
+      <!-- Top Accessible Header -->
+      <header class="header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="menu-toggle-btn" aria-label="Open navigation menu">
+            <i class="ri-menu-2-line"></i>
+          </button>
+          <div class="page-title-area">
+            <h2 id="current-page-title">Voter Journey</h2>
+            <p id="current-page-subtitle">Your step-by-step roadmap to democratic participation</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Accessibility Widget Panel -->
+          <div class="accessibility-panel">
+            <!-- Language Selection -->
+            <div class="dropdown-container">
+              <button class="icon-btn dropdown-trigger" id="lang-btn" aria-label="Change language" title="Select Language">
+                <i class="ri-translate-2"></i>
+                <span class="btn-lbl">EN</span>
+              </button>
+              <div class="dropdown-menu" id="lang-menu">
+                <button class="dropdown-item" data-lang="en">English (US)</button>
+                <button class="dropdown-item" data-lang="es">Español (ES)</button>
+                <button class="dropdown-item" data-lang="fr">Français (FR)</button>
+              </div>
+            </div>
+
+            <!-- Dyslexia Font Toggle -->
+            <button class="icon-btn" id="dyslexia-btn" aria-label="Toggle Dyslexia font style" title="Dyslexia Friendly Font">
+              <i class="ri-font-sans-serif"></i>
+            </button>
+
+            <!-- Text Size Selector -->
+            <div class="dropdown-container">
+              <button class="icon-btn dropdown-trigger" id="text-size-btn" aria-label="Change text size" title="Adjust Font Size">
+                <i class="ri-text-spacing"></i>
+              </button>
+              <div class="dropdown-menu font-sizes-menu" id="font-size-menu">
+                <button class="dropdown-item" data-size="small">Small</button>
+                <button class="dropdown-item active" data-size="medium">Medium</button>
+                <button class="dropdown-item" data-size="large">Large</button>
+                <button class="dropdown-item" data-size="extra">Extra Large</button>
+              </div>
+            </div>
+
+            <!-- Text to Speech Voice Toggle -->
+            <button class="icon-btn" id="voice-btn" aria-label="Toggle read aloud speech synthesis" title="Text to Speech (Voice Mode)">
+              <i class="ri-volume-mute-line"></i>
+            </button>
+
+            <!-- Theme / Contrast mode -->
+            <button class="icon-btn" id="contrast-btn" aria-label="Toggle High Contrast Mode" title="Toggle Contrast Mode">
+              <i class="ri-contrast-drop-line"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Container (Panels rendered dynamically or toggled via active state) -->
+      <div class="content-container">
+        
+        <!-- Voter Journey View -->
+        <section id="view-journey" class="view-panel active">
+          <!-- Rendered dynamically by Journey.js -->
+        </section>
+
+        <!-- AI Chat Assistant View -->
+        <section id="view-chat" class="view-panel">
+          <!-- Rendered dynamically by Chat.js -->
+        </section>
+
+        <!-- Live Timeline View -->
+        <section id="view-timeline" class="view-panel">
+          <!-- Rendered dynamically by Timeline.js -->
+        </section>
+
+        <!-- Learning Hub View -->
+        <section id="view-learning" class="view-panel">
+          <!-- Rendered dynamically by LearningHub.js -->
+        </section>
+
+        <!-- Live Widgets View -->
+        <section id="view-widgets" class="view-panel">
+          <!-- Rendered dynamically by Widgets.js -->
+        </section>
+
+        <!-- Security & Trust View -->
+        <section id="view-security" class="view-panel">
+          <!-- Rendered dynamically by Security.js -->
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Speech feedback system instructions (screen-reader/voice indicator) -->
+  <div id="voice-toast" class="voice-toast-hidden" aria-live="polite">
+    <i class="ri-mic-line"></i>
+    <span id="voice-toast-text">Voice synthesis active</span>
+  </div>
+
+  <!-- Entry Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
